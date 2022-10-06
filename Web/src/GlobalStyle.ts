@@ -24,8 +24,17 @@ const GlobalStyle = createGlobalStyle`
     height: 26vh;
     width: 100vw;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     background-color: #72939A;
+
+    > div{
+      width: 60%;
+      height: 80%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
   }
 `
 

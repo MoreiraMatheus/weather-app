@@ -13,9 +13,11 @@ function App() {
         <CardWithKeyInformations/>
 
         <footer>
-          <DailyForecastCard>a</DailyForecastCard>
-          <DailyForecastCard>a</DailyForecastCard>
-          <DailyForecastCard>a</DailyForecastCard>
+          <div>
+            <DailyForecastCard>HJ</DailyForecastCard>
+            <DailyForecastCard>AM</DailyForecastCard>
+            <DailyForecastCard>DPS</DailyForecastCard>
+          </div>
         </footer>
       </main>
     </>
