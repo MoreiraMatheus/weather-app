@@ -1,13 +1,20 @@
+import { useContext} from 'react'
+
 import { Wrapper, KeyInformations, ImageWrapper } from './styles'
 
-function CardWithkeyInformations(){
+import { WeatherContext, IKeyInformations } from '../App/App'
+
+
+function CardWithkeyInformations(props:IKeyInformations){
+  const teste = useContext(WeatherContext)
+
   return(
     <Wrapper>
-      <h1>Your location</h1>
+      <h1>{props.cityName} - {props.country}</h1>
       <div>
         <KeyInformations>
-          <h1>00º</h1>
-          <p>info....</p>
+          <h1>{props.temp}º</h1>
+          <p>info {teste}</p>
           <p>info....</p>
           <p>info....</p>
           <p>info....</p>
