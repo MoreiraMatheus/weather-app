@@ -6,47 +6,63 @@ import DailyForecastCard from "../DailyForecastCard/styles";
 import CardWithKeyInformations from "../CardWithKeyInformations";
 
 import { FindCurrentLocation, coordinates } from "../../functions/FindCurrentLocation";
-import { QueryWeatherApiByCoords } from "../../functions/QueryWeatherApiByCoords";
 
-const test = 'testando'
+export const WeatherContext = createContext({})
 
-export const WeatherContext = createContext(test)
-
-const cords:coordinates = FindCurrentLocation()
+let cords:coordinates = FindCurrentLocation();
 
 export interface IKeyInformations{
   temp?: number;
   cityName?: string;
   country?: string;
+  feelsLike?: number;
+  situation?: string;
+  max?: number;
+  min?: number;
+  wind?: number;
+  humidity?: number;
 }
 
 function App() {
   const [keyInformations, setKeyInformations] = useState<IKeyInformations>()
+
+  //Lembre-se de inserir sua chave de API no arquivo .env (traduzir)
+  const apiKey = process.env.REACT_APP_API_KEY
+
+  async function QueryWeatherApiByCoords(lat:number, lon:number){
+    const require = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`)
+
+    const data = await require.json()
+
+    console.log(data)
+    setKeyInformations({
+      temp: data.main.temp,
+      cityName: data.name,
+      country: data.sys.country,
+      feelsLike: data.main.feels_like,
+      situation: data.weather[0].description,
+      max: data.main.temp_max,
+      min: data.main.temp_min,
+      wind: data.wind.speed,
+      humidity: data.main.humidity,
+    })
+  }
   
   useEffect(()=>{
-    QueryWeatherApiByCoords(cords.latitude, cords.longitude).then(
-      response => {
-        setKeyInformations({
-          temp: response.main.temp,
-          cityName: response.name,
-          country: response.sys.country
-        })
-      }
-    )
+    QueryWeatherApiByCoords(cords.latitude, cords.longitude)
   }, [])
 
 
   return (
     <>
       <GlobalStyle/>
-      <WeatherContext.Provider value={test}>
+      <WeatherContext.Provider value={'a'}>
       <main>
         <SearchBar placeholder="Pesquisar"/>
 
-        <CardWithKeyInformations 
-          temp={keyInformations?.temp}
-          cityName={keyInformations?.cityName}
-          country={keyInformations?.country}
+        <CardWithKeyInformations
+          //descobrir por que aqui dá erro quando removo o nullish coalescing operator
+          informations={keyInformations ?? {}}
         />
 
         <footer>

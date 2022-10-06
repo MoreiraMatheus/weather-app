@@ -35,6 +35,19 @@ export const KeyInformations = styled.div`
     width: auto;
     height: auto;
   }
+
+  h2{
+    margin-top: -20px;
+    margin-bottom: 20px;
+  }
+
+  p{
+    margin: 4px 0;
+  }
+
+  span{
+    color: #ccc;
+  }
 `
 
 export const ImageWrapper = styled.div`
