@@ -47,6 +47,15 @@ function App() {
       humidity: data.main.humidity,
     })
   }
+
+  async function QueryCountryFlag(country:string){
+    const baseUrl = 'https://countryflagsapi.com/svg/'
+
+    const require = await fetch(baseUrl + country)
+    const data = await require.json()
+    
+    return data
+  }
   
   useEffect(()=>{
     QueryWeatherApiByCoords(cords.latitude, cords.longitude)

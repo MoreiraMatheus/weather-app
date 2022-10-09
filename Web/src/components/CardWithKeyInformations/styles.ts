@@ -43,6 +43,8 @@ export const KeyInformations = styled.div`
 
   p{
     margin: 4px 0;
+    display: flex;
+    
   }
 
   span{
