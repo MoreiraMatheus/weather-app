@@ -1,8 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 
 import GlobalStyle from "../GlobalStyle/GlobalStyle";
-import SearchBar from "../SearchBar/styles";
-import DailyForecastCard from "../DailyForecastCard/styles";
+import SearchBar from "../SearchBar/index";
 import CardWithKeyInformations from "../CardWithKeyInformations";
 
 import { FindCurrentLocation, coordinates } from "../../functions/FindCurrentLocation";
@@ -24,6 +23,8 @@ export interface IKeyInformations{
 }
 
 function App() {
+  let countryFlag:string;
+
   const [keyInformations, setKeyInformations] = useState<IKeyInformations>()
 
   //Lembre-se de inserir sua chave de API no arquivo .env (traduzir)
@@ -34,6 +35,7 @@ function App() {
 
     const data = await require.json()
 
+    console.log("requisição por coordenada")
     console.log(data)
     setKeyInformations({
       temp: data.main.temp,
@@ -48,17 +50,29 @@ function App() {
     })
   }
 
-  async function QueryCountryFlag(country:string){
-    const baseUrl = 'https://countryflagsapi.com/svg/'
+  async function QueryWeatherApiByCityName(cityName:string){
+    const require = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`)
 
-    const require = await fetch(baseUrl + country)
     const data = await require.json()
-    
-    return data
+    console.log('requisição por cidade')
+    console.log(data)
+    setKeyInformations({
+      temp: data.main.temp,
+      cityName: data.name,
+      country: data.sys.country,
+      feelsLike: data.main.feels_like,
+      situation: data.weather[0].description,
+      max: data.main.temp_max,
+      min: data.main.temp_min,
+      wind: data.wind.speed,
+      humidity: data.main.humidity,
+    })
   }
+
   
   useEffect(()=>{
-    QueryWeatherApiByCoords(cords.latitude, cords.longitude)
+    // QueryWeatherApiByCoords(cords.latitude, cords.longitude)
+    QueryWeatherApiByCityName('São Paulo')
   }, [])
 
 
@@ -67,20 +81,14 @@ function App() {
       <GlobalStyle/>
       <WeatherContext.Provider value={'a'}>
       <main>
-        <SearchBar placeholder="Pesquisar"/>
+        <SearchBar/>
 
         <CardWithKeyInformations
           //descobrir por que aqui dá erro quando removo o nullish coalescing operator
           informations={keyInformations ?? {}}
         />
 
-        <footer>
-          <div>
-            <DailyForecastCard>HJ</DailyForecastCard>
-            <DailyForecastCard>AM</DailyForecastCard>
-            <DailyForecastCard>DPS</DailyForecastCard>
-          </div>
-        </footer>
+        <footer>Desenvolvido por </footer>
       </main>
       </WeatherContext.Provider>
     </>

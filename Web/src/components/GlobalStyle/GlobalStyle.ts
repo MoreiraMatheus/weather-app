@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   footer{
-    height: 26vh;
+    height: 8vh;
     width: 100vw;
     display: flex;
     justify-content: center;
