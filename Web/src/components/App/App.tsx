@@ -1,12 +1,10 @@
-import { createContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import GlobalStyle from "../GlobalStyle/GlobalStyle";
 import SearchBar from "../SearchBar/index";
 import CardWithKeyInformations from "../CardWithKeyInformations";
 
 import { FindCurrentLocation, coordinates } from "../../functions/FindCurrentLocation";
-
-export const WeatherContext = createContext({})
 
 let cords:coordinates = FindCurrentLocation();
 
@@ -23,20 +21,24 @@ export interface IKeyInformations{
 }
 
 function App() {
-  let countryFlag:string;
+  const [keyInformations, setKeyInformations] = useState<IKeyInformations | null>(null)
 
-  const [keyInformations, setKeyInformations] = useState<IKeyInformations>()
-
-  //Lembre-se de inserir sua chave de API no arquivo .env (traduzir)
+  //Remember to enter your API key in the file ".env"
   const apiKey = process.env.REACT_APP_API_KEY
 
-  async function QueryWeatherApiByCoords(lat:number, lon:number){
-    const require = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`)
+  async function QueryWeatherApi(
+    cityName?:string, 
+    lat:number = cords.latitude, 
+    lon:number = cords.longitude){
+
+    const require = await fetch(
+      cityName !== undefined?
+      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`:
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`
+    )
 
     const data = await require.json()
 
-    console.log("requisição por coordenada")
-    console.log(data)
     setKeyInformations({
       temp: data.main.temp,
       cityName: data.name,
@@ -50,47 +52,23 @@ function App() {
     })
   }
 
-  async function QueryWeatherApiByCityName(cityName:string){
-    const require = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`)
-
-    const data = await require.json()
-    console.log('requisição por cidade')
-    console.log(data)
-    setKeyInformations({
-      temp: data.main.temp,
-      cityName: data.name,
-      country: data.sys.country,
-      feelsLike: data.main.feels_like,
-      situation: data.weather[0].description,
-      max: data.main.temp_max,
-      min: data.main.temp_min,
-      wind: data.wind.speed,
-      humidity: data.main.humidity,
-    })
-  }
-
-  
   useEffect(()=>{
-    // QueryWeatherApiByCoords(cords.latitude, cords.longitude)
-    QueryWeatherApiByCityName('São Paulo')
+    QueryWeatherApi()
   }, [])
-
 
   return (
     <>
       <GlobalStyle/>
-      <WeatherContext.Provider value={'a'}>
       <main>
-        <SearchBar/>
+        <SearchBar updateInformations={QueryWeatherApi}/>
 
         <CardWithKeyInformations
           //descobrir por que aqui dá erro quando removo o nullish coalescing operator
           informations={keyInformations ?? {}}
         />
 
-        <footer>Desenvolvido por </footer>
+        <footer>Desenvolvido por Matheus Moreira</footer>
       </main>
-      </WeatherContext.Provider>
     </>
   );
 }
