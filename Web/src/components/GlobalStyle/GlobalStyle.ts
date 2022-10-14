@@ -10,30 +10,36 @@ const GlobalStyle = createGlobalStyle`
     color: #fff;
   }
 
+  body{
+    background-color: #ccc;
+  }
+
   main{
     width: 100vw;
     height: 100vh;
-    background-color: #ccc;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
+
+    > div{
+      margin: auto;
+      width: 50%;
+      height: 85%;
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+    }
   }
 
   footer{
-    height: 8vh;
     width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-height: 20vh;
+    padding: 16px 0;
+    text-align: center;
     background-color: #72939A;
-
-    > div{
-      width: 60%;
-      height: 80%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+    a {
+      text-decoration: none;
+      font-weight: bold;
     }
   }
 `

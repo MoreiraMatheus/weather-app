@@ -63,14 +63,17 @@ function App() {
     <>
       <GlobalStyle/>
       <main>
-        <SearchBar updateInformations={QueryWeatherApi}/>
+        <div>
+          <SearchBar updateInformations={QueryWeatherApi}/>
+          <CardWithKeyInformations
+            //descobrir por que aqui dá erro quando removo o nullish coalescing operator
+            informations={keyInformations ?? {}}
+          />
+        </div>
 
-        <CardWithKeyInformations
-          //descobrir por que aqui dá erro quando removo o nullish coalescing operator
-          informations={keyInformations ?? {}}
-        />
-
-        <footer>Desenvolvido por Matheus Moreira</footer>
+        <footer>
+          Desenvolvido por <a href="https://github.com/MoreiraMatheus" target='_blank'>Matheus Moreira</a>
+        </footer>
       </main>
     </>
   );
