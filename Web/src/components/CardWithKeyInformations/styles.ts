@@ -13,6 +13,10 @@ export const Wrapper = styled.div`
     padding: 8px;
     background-color: #72939A;
     font-size: 1.8em;
+
+    > img{
+      width: 30px;
+    }
   }
 
   > div{
@@ -23,7 +27,7 @@ export const Wrapper = styled.div`
 `
 
 export const KeyInformations = styled.div`
-  width: 50%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -38,25 +42,15 @@ export const KeyInformations = styled.div`
 
   h2{
     margin-top: -20px;
-    margin-bottom: 20px;
   }
 
   p{
     margin: 4px 0;
     display: flex;
-    
+    align-items: center;
   }
 
   span{
     color: #ccc;
-  }
-`
-
-export const ImageWrapper = styled.div`
-  width: 50%;
-  height: 100%;
-
-  img{
-    width: 80%;
   }
 `

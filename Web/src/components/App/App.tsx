@@ -14,6 +14,7 @@ export interface IKeyInformations{
   country?: string;
   feelsLike?: number;
   situation?: string;
+  situationIcon?: string;
   max?: number;
   min?: number;
   wind?: number;
@@ -38,6 +39,7 @@ function App() {
     )
 
     const data = await require.json()
+    console.log(data)
 
     setKeyInformations({
       temp: data.main.temp,
@@ -45,6 +47,7 @@ function App() {
       country: data.sys.country,
       feelsLike: data.main.feels_like,
       situation: data.weather[0].description,
+      situationIcon: data.weather[0].icon,
       max: data.main.temp_max,
       min: data.main.temp_min,
       wind: data.wind.speed,

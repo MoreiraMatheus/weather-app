@@ -1,4 +1,4 @@
-import { Wrapper, KeyInformations, ImageWrapper } from './styles'
+import { Wrapper, KeyInformations } from './styles'
 
 import { IKeyInformations } from '../App/App'
 
@@ -12,7 +12,7 @@ interface CardWithkeyInformationsProps{
 function CardWithkeyInformations({informations}:CardWithkeyInformationsProps){
   return(
     <Wrapper>
-      <h1>{informations.cityName} - {informations.country}</h1>
+      <h1>{informations.cityName} - <img src={`https://countryflagsapi.com/svg/${informations.country}`} alt='bandeira'/></h1>
       <div>
         <KeyInformations>
           <h1>{informations.temp}º</h1>
@@ -21,39 +21,28 @@ function CardWithkeyInformations({informations}:CardWithkeyInformationsProps){
           </h2>
           <p>
             {informations.situation}
+            <img 
+            src={`http://openweathermap.org/img/wn/${informations.situationIcon}.png`}
+            alt='imagem do clima'
+          />
           </p>
           <p>
-            <ArrowUp
-              weight='bold'
-              size={20}
-            />
+            <ArrowUp weight='bold' size={20}/>
             {informations.max}º
           </p>
           <p>
-            <ArrowDown
-              weight='bold'
-              size={20}
-            />
+            <ArrowDown weight='bold' size={20}/>
             {informations.min}º
           </p>
           <p>
-            <Drop
-              weight='bold'
-              size={20}
-            />
+            <Drop weight='bold' size={20}/>
             {informations.humidity}%
           </p>
           <p>
-            <Wind
-              weight='bold'
-              size={20}
-            />
+            <Wind weight='bold' size={20}/>
             {informations.wind}m/s 
           </p>
         </KeyInformations>
-        <ImageWrapper>
-          <img src="https://www.shareicon.net/data/2016/06/27/787432_cloud_512x512.png" />
-        </ImageWrapper>
       </div>
     </Wrapper>
   )
