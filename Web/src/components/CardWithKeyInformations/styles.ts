@@ -1,12 +1,23 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  @keyframes apears {
+    0%{
+      opacity: 0;
+    }
+
+    100%{
+      opacity: 100%;
+    }
+  }
+
   width: 100%;
   background-color: #88AEB7;
   flex: 1;
   display: flex;
   flex-direction: column;
   border-radius: 4px;
+  animation: apears 1s;
 
   h1{
     width: 100%;

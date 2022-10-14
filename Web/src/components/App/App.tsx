@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import GlobalStyle from "../GlobalStyle/GlobalStyle";
 import SearchBar from "../SearchBar/index";
 import CardWithKeyInformations from "../CardWithKeyInformations";
+import { Loading } from "../Loading/Loading";
 
 import { FindCurrentLocation, coordinates } from "../../functions/FindCurrentLocation";
 
@@ -31,7 +32,7 @@ function App() {
     cityName?:string, 
     lat:number = cords.latitude, 
     lon:number = cords.longitude){
-
+    setKeyInformations(null)
     const require = await fetch(
       cityName !== undefined?
       `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`:
@@ -39,7 +40,6 @@ function App() {
     )
 
     const data = await require.json()
-    console.log(data)
 
     setKeyInformations({
       temp: data.main.temp,
@@ -65,10 +65,12 @@ function App() {
       <main>
         <div>
           <SearchBar updateInformations={QueryWeatherApi}/>
-          <CardWithKeyInformations
+          {keyInformations === null ?
+            <Loading>carregando...</Loading>:
+            <CardWithKeyInformations
             //descobrir por que aqui dá erro quando removo o nullish coalescing operator
             informations={keyInformations ?? {}}
-          />
+            />}
         </div>
 
         <footer>
