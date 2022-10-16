@@ -39,7 +39,6 @@ function App() {
         `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`:
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`
       )
-      console.log(require.status)
       const data = await require.json()
   
       setKeyInformations({

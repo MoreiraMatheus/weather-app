@@ -7,7 +7,7 @@ interface SearchBarProps{
 }
 
 function SearchBar(props:SearchBarProps){
-  let CityName:string; 
+  let CityName:string = ''; 
 
   return(
     <Wrapper>
@@ -15,7 +15,9 @@ function SearchBar(props:SearchBarProps){
         onChange={e => CityName = e.target.value}
         placeholder='Pesquisar'
       />
-      <SearchButton onClick={()=>props.updateInformations(CityName)}>
+      <SearchButton onClick={
+        ()=> CityName !== '' ? props.updateInformations(CityName) : alert('procure por um nome válido')
+      }>
         <MagnifyingGlass 
           size={60}
         />
