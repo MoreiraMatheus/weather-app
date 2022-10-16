@@ -10,16 +10,16 @@ import { FindCurrentLocation, coordinates } from "../../functions/FindCurrentLoc
 let cords:coordinates = FindCurrentLocation();
 
 export interface IKeyInformations{
-  temp?: number;
-  cityName?: string;
-  country?: string;
-  feelsLike?: number;
-  situation?: string;
-  situationIcon?: string;
-  max?: number;
-  min?: number;
-  wind?: number;
-  humidity?: number;
+  temp?: number | null;
+  cityName?: string | null;
+  country?: string | null;
+  feelsLike?: number | null;
+  situation?: string | null;
+  situationIcon?: string | null;
+  max?: number | null;
+  min?: number | null;
+  wind?: number | null;
+  humidity?: number | null;
 }
 
 function App() {
@@ -33,26 +33,42 @@ function App() {
     lat:number = cords.latitude, 
     lon:number = cords.longitude){
     setKeyInformations(null)
-    const require = await fetch(
-      cityName !== undefined?
-      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`:
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`
-    )
-
-    const data = await require.json()
-
-    setKeyInformations({
-      temp: data.main.temp,
-      cityName: data.name,
-      country: data.sys.country,
-      feelsLike: data.main.feels_like,
-      situation: data.weather[0].description,
-      situationIcon: data.weather[0].icon,
-      max: data.main.temp_max,
-      min: data.main.temp_min,
-      wind: data.wind.speed,
-      humidity: data.main.humidity,
-    })
+    try {
+      const require = await fetch(
+        cityName !== undefined?
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`:
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`
+      )
+      console.log(require.status)
+      const data = await require.json()
+  
+      setKeyInformations({
+        temp: data.main.temp,
+        cityName: data.name,
+        country: data.sys.country,
+        feelsLike: data.main.feels_like,
+        situation: data.weather[0].description,
+        situationIcon: data.weather[0].icon,
+        max: data.main.temp_max,
+        min: data.main.temp_min,
+        wind: data.wind.speed,
+        humidity: data.main.humidity,
+      })
+    } catch (error) {
+      // console.log(error)
+      setKeyInformations({
+        temp: null,
+        cityName: null,
+        country: null,
+        feelsLike: null,
+        situation: null,
+        situationIcon: null,
+        max: null,
+        min: null,
+        wind: null,
+        humidity: null,
+      })
+    }
   }
 
   useEffect(()=>{
@@ -70,7 +86,7 @@ function App() {
             <CardWithKeyInformations
             //descobrir por que aqui dá erro quando removo o nullish coalescing operator
             informations={keyInformations ?? {}}
-            />}
+          />}
         </div>
 
         <footer>

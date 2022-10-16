@@ -10,7 +10,11 @@ interface CardWithkeyInformationsProps{
 
 
 function CardWithkeyInformations({informations}:CardWithkeyInformationsProps){
-  return(
+
+  console.log(informations)
+
+  const validInformations = informations.cityName !== null?
+  // fragmentar o wrapper em um novo elemento
     <Wrapper>
       <h1>{informations.cityName} - <img src={`https://countryflagsapi.com/svg/${informations.country}`} alt='bandeira'/></h1>
       <div>
@@ -44,7 +48,12 @@ function CardWithkeyInformations({informations}:CardWithkeyInformationsProps){
           </p>
         </KeyInformations>
       </div>
-    </Wrapper>
+    </Wrapper>:
+  // criar um elemento para essa mensagem
+    <h1>Cidade não encontrada</h1>
+
+  return(
+    validInformations
   )
 }
 
