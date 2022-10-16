@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import GlobalStyle from "../GlobalStyle/GlobalStyle";
 import SearchBar from "../SearchBar/index";
 import CardWithKeyInformations from "../CardWithKeyInformations";
-import { Loading } from "../Loading/Loading";
+import { InformationTape } from "../InformationTape/InformationTape";
 
 import { FindCurrentLocation, coordinates } from "../../functions/FindCurrentLocation";
 
@@ -82,11 +82,11 @@ function App() {
         <div>
           <SearchBar updateInformations={QueryWeatherApi}/>
           {keyInformations === null ?
-            <Loading>carregando...</Loading>:
+            <InformationTape>carregando...</InformationTape>:
             <CardWithKeyInformations
-            //descobrir por que aqui dá erro quando removo o nullish coalescing operator
-            informations={keyInformations ?? {}}
-          />}
+              //descobrir por que aqui dá erro quando removo o nullish coalescing operator
+              informations={keyInformations ?? {}}
+            />}
         </div>
 
         <footer>

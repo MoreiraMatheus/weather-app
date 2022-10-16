@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const Loading = styled.h1`
+type Props = {
+  noanimate?: boolean;
+}
+
+export const InformationTape = styled.h1<Props>`
   @keyframes loadingAnimate {
     0%{background-color: #72939A;}
 
@@ -12,6 +16,6 @@ export const Loading = styled.h1`
   background-color: #72939A;
   border-radius: 8px;
   text-align: center;
-
-  animation: loadingAnimate 0.4s linear infinite alternate;
+  
+  animation: ${props => props.noanimate ? 'none' : 'loadingAnimate 0.4s linear infinite alternate;'}
 `

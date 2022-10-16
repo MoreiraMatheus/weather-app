@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
   }
 `
 
-export const KeyInformations = styled.div`
+export const Data = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
