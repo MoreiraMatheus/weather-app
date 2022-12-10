@@ -19,7 +19,7 @@ function SearchBar(props:SearchBarProps){
         ()=> CityName !== '' ? props.updateInformations(CityName) : alert('procure por um nome válido')
       }>
         <MagnifyingGlass 
-          size={60}
+          size={'100%'}
         />
       </SearchButton>
     </Wrapper>

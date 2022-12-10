@@ -9,8 +9,6 @@ interface CardWithkeyInformationsProps{
 
 function CardWithkeyInformations({informations}:CardWithkeyInformationsProps){
 
-  console.log(informations)
-
   const validInformations = informations.cityName !== null?
     <KeyInformations informations={informations}/>:
     <InformationTape noanimate>Cidade não encontrada</InformationTape>

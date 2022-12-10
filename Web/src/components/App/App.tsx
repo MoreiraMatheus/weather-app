@@ -5,11 +5,14 @@ import SearchBar from "../SearchBar/index";
 import CardWithKeyInformations from "../CardWithKeyInformations";
 import { InformationTape } from "../InformationTape/InformationTape";
 
-import { FindCurrentLocation, coordinates } from "../../functions/FindCurrentLocation";
+import {
+  FindCurrentLocation,
+  coordinates,
+} from "../../functions/FindCurrentLocation";
 
-let cords:coordinates = FindCurrentLocation();
+let cords: coordinates = FindCurrentLocation();
 
-export interface IKeyInformations{
+export interface IKeyInformations {
   temp?: number | null;
   cityName?: string | null;
   country?: string | null;
@@ -23,15 +26,17 @@ export interface IKeyInformations{
 }
 
 function App() {
-  const [keyInformations, setKeyInformations] = useState<IKeyInformations | null>(null)
+  const [keyInformations, setKeyInformations] =
+    useState<IKeyInformations | null>(null);
 
   //Remember to enter your API key in the file ".env"
-  const apiKey = process.env.REACT_APP_API_KEY
+  const apiKey = process.env.REACT_APP_API_KEY;
 
   async function QueryWeatherApi(
-    cityName?:string, 
-    lat:number = cords.latitude, 
-    lon:number = cords.longitude){
+    cityName?: string,
+    lat: number = cords.latitude,
+    lon: number = cords.longitude
+  ) {
     const nullInformationsObject = {
       temp: null,
       cityName: null,
@@ -43,17 +48,17 @@ function App() {
       min: null,
       wind: null,
       humidity: null,
-    }
-    setKeyInformations(null)
+    };
+    setKeyInformations(null);
     try {
       const require = await fetch(
-        cityName !== undefined?
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`:
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`
-      )
-      const data = await require.json()
-        
-      if(data.name !== 'Globe'){
+        cityName !== undefined
+          ? `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pt_br`
+          : `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`
+      );
+      const data = await require.json();
+
+      if (data.name !== "Globe") {
         setKeyInformations({
           temp: data.main.temp,
           cityName: data.name,
@@ -65,37 +70,40 @@ function App() {
           min: data.main.temp_min,
           wind: data.wind.speed,
           humidity: data.main.humidity,
-        })
+        });
+      } else {
+        setKeyInformations(nullInformationsObject);
       }
-      else{
-        setKeyInformations(nullInformationsObject)
-      }
-
     } catch (error) {
-      setKeyInformations(nullInformationsObject)
+      setKeyInformations(nullInformationsObject);
     }
   }
 
-  useEffect(()=>{
-    QueryWeatherApi()
-  }, [])
+  useEffect(() => {
+    QueryWeatherApi();
+  }, []);
 
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyle />
       <main>
         <div>
-          <SearchBar updateInformations={QueryWeatherApi}/>
-          {keyInformations === null ?
-            <InformationTape>carregando...</InformationTape>:
+          <SearchBar updateInformations={QueryWeatherApi} />
+          {keyInformations === null ? (
+            <InformationTape>carregando...</InformationTape>
+          ) : (
             <CardWithKeyInformations
               //descobrir por que aqui dá erro quando removo o nullish coalescing operator
               informations={keyInformations}
-            />}
+            />
+          )}
         </div>
 
         <footer>
-          Desenvolvido por <a href="https://github.com/MoreiraMatheus" target='_blank'>Matheus Moreira</a>
+          Desenvolvido por{" "}
+          <a href="https://github.com/MoreiraMatheus" target="_blank">
+            Matheus Moreira
+          </a>
         </footer>
       </main>
     </>

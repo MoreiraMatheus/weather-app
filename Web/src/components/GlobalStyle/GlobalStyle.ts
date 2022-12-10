@@ -28,6 +28,14 @@ const GlobalStyle = createGlobalStyle`
       display: flex;
       flex-direction: column;
       row-gap: 20px;
+      
+      @media (max-width: 800px) {
+        width: 70%;
+      }
+
+      @media (max-width: 375px) {
+        width: 90%;
+      }
     }
   }
 

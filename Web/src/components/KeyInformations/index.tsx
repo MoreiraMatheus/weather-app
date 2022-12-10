@@ -1,50 +1,54 @@
-import { Wrapper, Data } from './styles'
+import { Wrapper, Data } from "./styles";
 
-import { Wind, ArrowUp, ArrowDown, Drop } from 'phosphor-react'
+import { Wind, ArrowUp, ArrowDown, Drop } from "phosphor-react";
 
-import { IKeyInformations } from '../App/App'
+import { IKeyInformations } from "../App/App";
 
-interface keyInformationsProps{
+interface keyInformationsProps {
   informations: IKeyInformations;
 }
 
-function KeyInformations({informations}:keyInformationsProps){
-  return(
+function KeyInformations({ informations }: keyInformationsProps) {
+  return (
     <Wrapper>
-      <h1>{informations.cityName} - <img src={`https://countryflagsapi.com/svg/${informations.country}`} alt='bandeira'/></h1>
+      <h1>
+        {`${informations.cityName} - `}
+        <img
+          src={`https://countryflagsapi.com/svg/${informations.country}`}
+          alt="bandeira"
+        />
+      </h1>
       <div>
         <Data>
           <h1>{informations.temp}º</h1>
-          <h2>
-            Sensação térmica: {informations.feelsLike}º
-          </h2>
+          <h2>Sensação térmica: {informations.feelsLike}º</h2>
           <p>
             {informations.situation}
-            <img 
-            src={`http://openweathermap.org/img/wn/${informations.situationIcon}.png`}
-            alt='imagem do clima'
-          />
+            <img
+              src={`http://openweathermap.org/img/wn/${informations.situationIcon}.png`}
+              alt="imagem do clima"
+            />
           </p>
           <p>
-            <ArrowUp weight='bold' size={20}/>
+            <ArrowUp weight="bold" size={20} />
             {informations.max}º
           </p>
           <p>
-            <ArrowDown weight='bold' size={20}/>
+            <ArrowDown weight="bold" size={20} />
             {informations.min}º
           </p>
           <p>
-            <Drop weight='bold' size={20}/>
+            <Drop weight="bold" size={20} />
             {informations.humidity}%
           </p>
           <p>
-            <Wind weight='bold' size={20}/>
-            {informations.wind}m/s 
+            <Wind weight="bold" size={20} />
+            {informations.wind}m/s
           </p>
         </Data>
       </div>
     </Wrapper>
-  )
+  );
 }
 
-export default KeyInformations
+export default KeyInformations;
