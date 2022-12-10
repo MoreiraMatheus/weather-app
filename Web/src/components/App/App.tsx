@@ -32,6 +32,18 @@ function App() {
     cityName?:string, 
     lat:number = cords.latitude, 
     lon:number = cords.longitude){
+    const nullInformationsObject = {
+      temp: null,
+      cityName: null,
+      country: null,
+      feelsLike: null,
+      situation: null,
+      situationIcon: null,
+      max: null,
+      min: null,
+      wind: null,
+      humidity: null,
+    }
     setKeyInformations(null)
     try {
       const require = await fetch(
@@ -40,33 +52,27 @@ function App() {
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`
       )
       const data = await require.json()
-  
-      setKeyInformations({
-        temp: data.main.temp,
-        cityName: data.name,
-        country: data.sys.country,
-        feelsLike: data.main.feels_like,
-        situation: data.weather[0].description,
-        situationIcon: data.weather[0].icon,
-        max: data.main.temp_max,
-        min: data.main.temp_min,
-        wind: data.wind.speed,
-        humidity: data.main.humidity,
-      })
+        
+      if(data.name !== 'Globe'){
+        setKeyInformations({
+          temp: data.main.temp,
+          cityName: data.name,
+          country: data.sys.country,
+          feelsLike: data.main.feels_like,
+          situation: data.weather[0].description,
+          situationIcon: data.weather[0].icon,
+          max: data.main.temp_max,
+          min: data.main.temp_min,
+          wind: data.wind.speed,
+          humidity: data.main.humidity,
+        })
+      }
+      else{
+        setKeyInformations(nullInformationsObject)
+      }
+
     } catch (error) {
-      // console.log(error)
-      setKeyInformations({
-        temp: null,
-        cityName: null,
-        country: null,
-        feelsLike: null,
-        situation: null,
-        situationIcon: null,
-        max: null,
-        min: null,
-        wind: null,
-        humidity: null,
-      })
+      setKeyInformations(nullInformationsObject)
     }
   }
 
@@ -84,7 +90,7 @@ function App() {
             <InformationTape>carregando...</InformationTape>:
             <CardWithKeyInformations
               //descobrir por que aqui dá erro quando removo o nullish coalescing operator
-              informations={keyInformations ?? {}}
+              informations={keyInformations}
             />}
         </div>
 

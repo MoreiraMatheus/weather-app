@@ -8,7 +8,6 @@ const currentCoordinates:coordinates = {latitude:0, longitude:0};
 export function FindCurrentLocation():coordinates {
   navigator.geolocation.watchPosition(
     position => {
-      // console.log(position)
       currentCoordinates.latitude = position.coords.latitude
       currentCoordinates.longitude = position.coords.longitude
     },
