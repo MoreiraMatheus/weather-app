@@ -102,3 +102,10 @@ export const Data = styled.div`
     color: #ccc;
   }
 `
+
+export const Information = styled.abbr`
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  align-self: flex-end;
+`

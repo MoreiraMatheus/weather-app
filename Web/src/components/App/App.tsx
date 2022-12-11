@@ -93,7 +93,6 @@ function App() {
             <InformationTape>carregando...</InformationTape>
           ) : (
             <CardWithKeyInformations
-              //descobrir por que aqui dá erro quando removo o nullish coalescing operator
               informations={keyInformations}
             />
           )}

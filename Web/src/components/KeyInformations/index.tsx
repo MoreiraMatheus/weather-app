@@ -1,6 +1,6 @@
-import { Wrapper, Data } from "./styles";
+import { Wrapper, Data, Information } from "./styles";
 
-import { Wind, ArrowUp, ArrowDown, Drop } from "phosphor-react";
+import { Wind, ArrowUp, ArrowDown, Drop, Info } from "phosphor-react";
 
 import { IKeyInformations } from "../App/App";
 
@@ -47,6 +47,9 @@ function KeyInformations({ informations }: keyInformationsProps) {
           </p>
         </Data>
       </div>
+      <Information title="A localização pode não ser precisa">
+        <Info width={'100%'} height={'100%'} weight='bold'/>
+      </Information>
     </Wrapper>
   );
 }

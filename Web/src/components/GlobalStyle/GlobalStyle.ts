@@ -35,6 +35,7 @@ const GlobalStyle = createGlobalStyle`
 
       @media (max-width: 375px) {
         width: 90%;
+        height: 80%;
       }
     }
   }

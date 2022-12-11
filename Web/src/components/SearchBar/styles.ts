@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 
 export const Input = styled.input`
   padding-left: 16px;
-  max-width: 78%; 
+  width: 100%; 
   background-color: #88AEB7;
   border: none;
   border-radius: 4px;
